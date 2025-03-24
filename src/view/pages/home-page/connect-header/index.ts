@@ -1,0 +1,1 @@
+export { ConnectHeader } from "./connect-header.component";

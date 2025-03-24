@@ -1,0 +1,1 @@
+export { SolanaWalletProvider } from "./solana-wallet-provider.component";
