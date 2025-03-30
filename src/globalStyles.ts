@@ -11,11 +11,9 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    margin: 0; /* Убирает стандартные отступы */
-    padding: 0; /* Убирает стандартные padding */
-    font-family: Arial, sans-serif; /* Твой шрифт */
-    background-color: #000; /* Твой фон */
-    color: #D0D0DC; /* Твой цвет текста */
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif; 
   }
 
   h1, h2, h3, h4, h5, h6 {

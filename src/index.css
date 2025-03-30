@@ -23,6 +23,12 @@ a:hover {
 }
 
 body {
+  background-image: url('solana-bg.png');
+  background-size: cover;   
+  background-position: center;  
+  background-repeat: no-repeat; 
+  background-color: #000; 
+  color: #D0D0DC; 
   margin: 0;
   display: flex;
   place-items: center;

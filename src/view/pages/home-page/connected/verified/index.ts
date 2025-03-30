@@ -1,0 +1,1 @@
+export { Verified } from "./verified.component";

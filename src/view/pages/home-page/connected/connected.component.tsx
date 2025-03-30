@@ -2,15 +2,18 @@ import { Button } from "@components/button/button.component";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { PublicKey } from "@solana/web3.js";
 import { useSnackbar } from "notistack";
+import { useState } from "react";
 import { styled } from "styled-components";
 import nacl from "tweetnacl";
+import { Verified } from "./verified";
 
 
 export const Connected: React.FC = () => {
   const { enqueueSnackbar } = useSnackbar();
   const { publicKey, signMessage } = useWallet();
-  
-  // verifyMessageSign метод должен работать на сервере/бэкенде
+  const [ isVerified, setIsVerified ] = useState<boolean>(false)
+
+  // verifyMessageSign method should work on the server/backend
   const verifyMessageSign = async (
     encodedMessage: Uint8Array,
     signature: Uint8Array,
@@ -51,6 +54,7 @@ export const Connected: React.FC = () => {
       if (isValid) {
         console.log('Сообщение подписано и проверено успешно');
         enqueueSnackbar('Сообщение подписано и проверено успешно', { variant: 'success' });
+        setIsVerified(true);
       } else {
         console.error('Подпись недействительна');
         enqueueSnackbar('Подпись недействительна', { variant: 'error' });
@@ -63,11 +67,19 @@ export const Connected: React.FC = () => {
 
   return (
     <ConnectedSection>
-      <p>Ваш адрес кошелька — <br /> <b> {publicKey?.toBase58()}</b>, <br /> однако на этом этапе нет гарантии, что именно вы являетесь его владельцем. Чтобы подтвердить владение, необходимо подписать сообщение с использованием приватного ключа.</p>
-      <br />
-      <Button onClick={() => signMessageMethod()}>
-        Подписать сообщение по приватному ключу
-      </Button>
+      {isVerified ? (
+        <>
+          <p>Ваш адрес кошелька — <br /> <b> {publicKey?.toBase58()}</b>, <br />У вас есть полный доступ!</p>
+          <br />
+          <Verified isVerified={isVerified} />
+        </>
+      ) : (
+        <>
+          <p>Ваш адрес кошелька — <br /> <b> {publicKey?.toBase58()}</b>, <br /> однако на этом этапе нет гарантии, что именно вы являетесь его владельцем. Чтобы подтвердить владение, необходимо подписать сообщение с использованием приватного ключа.</p>
+          <br />
+          <Button onClick={() => signMessageMethod()}> Подписать сообщение по приватному ключу </Button>
+        </>
+      ) }
     </ConnectedSection>
   );
 };
