@@ -4,6 +4,7 @@ import { Connection, LAMPORTS_PER_SOL, PublicKey, Transaction } from "@solana/we
 import { enqueueSnackbar } from "notistack";
 import { createTransaction, submitGetNft } from "./verified.utils";
 import { styled } from "styled-components";
+import { useState } from "react";
 
 const { VITE_RPC_URL, VITE_WALLET_RECIPIENT } = import.meta.env;
 interface VerifiedProps {
@@ -11,6 +12,7 @@ interface VerifiedProps {
 }
 
 export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
+  const [overlayVisibility, setOverlayVisibility] = useState<boolean>(false);
   const { publicKey, signTransaction } = useWallet();
 
   const fromPubkey: PublicKey = publicKey as PublicKey;
@@ -19,6 +21,8 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
 
   const makePayment = async () => {
     if(!publicKey || !signTransaction) return null;
+    setOverlayVisibility(true);
+
     try {
       const connection = new Connection(VITE_RPC_URL);
 
@@ -27,9 +31,10 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       const blockHash = await connection.getLatestBlockhash();
       transaction.feePayer = fromPubkey;
       transaction.recentBlockhash = blockHash.blockhash;
-      
-      const signed = await signTransaction(transaction);
 
+      setOverlayVisibility(false);
+
+      const signed = await signTransaction(transaction);
       const signature = await connection.sendRawTransaction(signed.serialize());
 
       enqueueSnackbar('Transaction has been sent, waiting for confirmation.', { variant: 'info', });
@@ -54,6 +59,8 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       console.error('Transaction error:', error);
       enqueueSnackbar(errorMessage, { variant: 'error' });
     }
+
+    setOverlayVisibility(false);
   }
 
   const sendNft = async () => {
@@ -61,6 +68,8 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       enqueueSnackbar('User publicKey is not found!', { variant: 'error' });
       return null;
     }
+
+    setOverlayVisibility(true);
 
     try {
       const result = await submitGetNft(publicKey?.toString());
@@ -80,15 +89,18 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       console.error('NFT sent error: ', error);
       enqueueSnackbar(errorMessage, { variant: 'error' });
     }
+
+    setOverlayVisibility(false);
+
   };
 
   return (
     <>
       {isVerified && (
         <Wrapper>
-          <Button onClick={() => makePayment()}> Демо-оплата на 0.00001 SOL</Button>
+          <Button disabled={overlayVisibility} onClick={() => makePayment()}> Демо-оплата на 0.00001 SOL</Button>
           <br />
-          <Button onClick={() => sendNft()}>Получить NFT</Button>
+          <Button disabled={overlayVisibility} onClick={() => sendNft()}>Получить NFT</Button>
         </Wrapper>
       )}
     </>
