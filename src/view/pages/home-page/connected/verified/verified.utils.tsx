@@ -1,5 +1,7 @@
 import { PublicKey, SystemProgram, Transaction } from "@solana/web3.js";
 
+const { VITE_BACKEND_URL } = import.meta.env;
+
 interface ICreateTransaction {
   fromPubkey: PublicKey;
   toPubkey: PublicKey;
@@ -20,3 +22,23 @@ export const createTransaction = ({fromPubkey, toPubkey, lamports}: ICreateTrans
 
   return transaction;
 }
+
+export const submitGetNft = async (inputValue: string) => {
+  const response = await fetch(`${VITE_BACKEND_URL}/api/get-nft`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ wallet: inputValue }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error);
+  }
+
+  const result = await response.json();
+  return result;
+};
+
+

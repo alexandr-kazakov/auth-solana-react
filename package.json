@@ -43,5 +43,14 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
+  },
+  "author": {
+    "name": "Alexander Kazakov",
+    "email": "alexandr.kazakov1@gmail.com",
+    "url": "https://github.com/alexandr-kazakov/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alexandr-kazakov/auth-solana-react.git"
   }
 }

@@ -38,7 +38,6 @@ export const Connected: React.FC = () => {
     }
   };
 
-
   const signMessageMethod = async () => {
     if (!publicKey || !signMessage) {
       console.error('Wallet not connected or signing not supported');
@@ -52,15 +51,15 @@ export const Connected: React.FC = () => {
 
       const isValid = await verifyMessageSign(encodedMessage, signature, publicKey);
       if (isValid) {
-        console.log('Сообщение подписано и проверено успешно');
-        enqueueSnackbar('Сообщение подписано и проверено успешно', { variant: 'success' });
+        console.log('Message signed and verified successful');
+        enqueueSnackbar('Message signed and verified successful', { variant: 'success' });
         setIsVerified(true);
       } else {
-        console.error('Подпись недействительна');
-        enqueueSnackbar('Подпись недействительна', { variant: 'error' });
+        console.error('The signature is invalid');
+        enqueueSnackbar('The signature is invalid', { variant: 'error' });
       }
     } catch (error) {
-      console.error('Ошибка подписи сообщения:', error);
+      console.error('Sign message error:', error);
     }
   };
 
@@ -69,7 +68,7 @@ export const Connected: React.FC = () => {
     <ConnectedSection>
       {isVerified ? (
         <>
-          <p>Ваш адрес кошелька — <br /> <b> {publicKey?.toBase58()}</b>, <br />У вас есть полный доступ!</p>
+          <p>У вас есть полный доступ!</p>
           <br />
           <Verified isVerified={isVerified} />
         </>

@@ -1,54 +1,59 @@
-# React + TypeScript + Vite
+# Auth Solana React App (TypeScript + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- Live demo - [auth-solana-react.netlify.app](https://auth-solana-react.netlify.app/)
 
-Currently, two official plugins are available:
+## Description
+Auth Solana React App is a React application that enables wallet-based authentication using Web3 Solana. Users can connect their Solana wallets (e.g., Phantom) to log in and manage their authentication status within the app. There are also demo options: demo payment and receiving NFT.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Requirements
+- Node.js (version 21 or higher)
+- npm
 
-## Expanding the ESLint configuration
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/alexandr-kazakov/auth-solana-react.git
+2. Navigate to the project directory:
+   ```bash
+   cd auth-solana-react
+3. Install dependencies:
+   ```bash
+   npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Running the App
+1. Start the application in development mode:
+   ```bash
+   npm run dev
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Building for Production
+1. To create a production build:
+   ```bash
+   npm run build
+
+## Solana Integration
+To interact with Solana:
+1. Install a Solana wallet (e.g., Phantom) in your browser.
+2. Ensure your wallet is connected to the Solana network (e.g., Devnet or Mainnet).
+
+## Config setup
+See .env.example
+
+Create .env file in the project root near the env.example and write the config from .env.example on it.
+```
+VITE_RPC_URL = Solana RPC URL (e.g. https://mainnet.helius-rpc.com/?api-key=XXX)
+VITE_WALLET_RECIPIENT = A wallet recipient address string for demo payment option (e.g. 5G7Hmo99vrSFvvPEFS4iGTyjhTtqUUAqD3HdHFuA3g9V)
+VITE_BACKEND_URL = A backend URL for demo NFT option (e.g. http://localhost:3001)
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Stay in touch
+- Author - [Alexandr Kazakov](mailto:alexandr.kazakov1@gmail.com)
+- Website - [https://alexkazakov.info](https://alexkazakov.info)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Support
+Auth Solana React App is an MIT-licensed open source project, you can say thanks here:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+[![Support me on Patreon](https://img.shields.io/badge/Patreon%20-be%20a%20Patron-FF424D?style=for-the-badge&logo=patreon)](https://patreon.com/alexkazakov)
+
+## License
+Auth Solana React App is [MIT licensed](https://github.com/alexandr-kazakov/auth-solana-react/blob/main/LICENSE).
+

@@ -2,10 +2,10 @@ import { Button } from "@components/button/button.component";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { Connection, LAMPORTS_PER_SOL, PublicKey, Transaction } from "@solana/web3.js";
 import { enqueueSnackbar } from "notistack";
-import { createTransaction } from "./verified.utils";
+import { createTransaction, submitGetNft } from "./verified.utils";
+import { styled } from "styled-components";
 
 const { VITE_RPC_URL, VITE_WALLET_RECIPIENT } = import.meta.env;
-
 interface VerifiedProps {
   isVerified: boolean;
 }
@@ -40,7 +40,7 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
         signature
       });
 
-      enqueueSnackbar('Transaction has been confirmed.', { variant: 'success' })
+      enqueueSnackbar(`Transaction has been confirmed: signature ${signature}`, { variant: 'success',  autoHideDuration: 5000 })
 
     } catch (error) {
       let errorMessage = 'Transaction failed: ';
@@ -56,13 +56,46 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
     }
   }
 
+  const sendNft = async () => {
+    if(!publicKey) {
+      enqueueSnackbar('User publicKey is not found!', { variant: 'error' });
+      return null;
+    }
+
+    try {
+      const result = await submitGetNft(publicKey?.toString());
+      
+      console.log('NFT successfully sent: ', result);
+      enqueueSnackbar(`NFT successfully sent: ${result.message}`, { variant: 'success',  autoHideDuration: 5000  });
+
+    } catch (error) {
+      let errorMessage = 'NFT send error: ';
+      
+      if (error instanceof Error) {
+        errorMessage += error.message;
+      } else if (typeof error === 'string') {
+        errorMessage += error;
+      }
+
+      console.error('NFT sent error: ', error);
+      enqueueSnackbar(errorMessage, { variant: 'error' });
+    }
+  };
+
   return (
-    <div >
-      {isVerified ? (<div>
-        <Button onClick={() => makePayment()}>
-        Демо-оплата на 0.00001 SOL
-        </Button>
-      </div>) : (<div>No</div>)}
-    </div>
+    <>
+      {isVerified && (
+        <Wrapper>
+          <Button onClick={() => makePayment()}> Демо-оплата на 0.00001 SOL</Button>
+          <br />
+          <Button onClick={() => sendNft()}>Получить NFT</Button>
+        </Wrapper>
+      )}
+    </>
   );
 };
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`

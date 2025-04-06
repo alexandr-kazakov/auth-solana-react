@@ -1,20 +1,15 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  // Дополнительные пропсы, если нужны (пока оставим пустым)
-}
-
-
-
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
 export const Button: React.FC<ButtonProps> = ({ children, ...props }) => {
   return <StyledButton {...props}>{children}</StyledButton>;
 };
 
 const StyledButton = styled.button`
-  background-color: #9945ff; /* Цвет фона по умолчанию */
-  color: #fff; /* Белый текст для контраста */
+  background-color: #9945ff; 
+  color: #fff; 
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
@@ -23,7 +18,7 @@ const StyledButton = styled.button`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #7a37cc; /* Темнее на ховер */
+    background-color: #7a37cc; 
   }
 
   &:disabled {
