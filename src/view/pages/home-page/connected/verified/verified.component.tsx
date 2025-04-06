@@ -46,7 +46,7 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       });
 
       enqueueSnackbar(`Transaction has been confirmed: signature ${signature}`, { variant: 'success',  autoHideDuration: 5000 })
-
+      setOverlayVisibility(false);
     } catch (error) {
       let errorMessage = 'Transaction failed: ';
       
@@ -58,9 +58,8 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
     
       console.error('Transaction error:', error);
       enqueueSnackbar(errorMessage, { variant: 'error' });
+      setOverlayVisibility(false);
     }
-
-    setOverlayVisibility(false);
   }
 
   const sendNft = async () => {
