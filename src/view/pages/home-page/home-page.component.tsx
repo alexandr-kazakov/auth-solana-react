@@ -37,9 +37,10 @@ const Container = styled.div<{ connected: boolean }>`
   width: 100%;
   height: 500px;
   border-radius: 20px;
+  overflow-x: hidden;
   box-shadow: 0 0 20px 10px rgba(153, 69, 255, 0.5);
   animation: ${({ connected }) => (connected ? 'shadowPulse 5s infinite linear' : 'none')};
-      position: relative;
+  position: relative;
 
   @keyframes shadowPulse {
     0% {
@@ -51,6 +52,10 @@ const Container = styled.div<{ connected: boolean }>`
     100% {
       box-shadow: 0 0 20px 10px rgba(153, 69, 255, 0.5); 
     }
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px 10px;
   }
 `;
 
