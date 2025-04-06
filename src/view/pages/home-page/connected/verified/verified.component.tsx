@@ -35,7 +35,18 @@ export const Verified: React.FC<VerifiedProps> = ({isVerified}) => {
       setOverlayVisibility(false);
 
       const signed = await signTransaction(transaction);
-      const signature = await connection.sendRawTransaction(signed.serialize());
+      let signature;
+
+      if (typeof signed === 'object' && signed.serialize) {
+        signature = await connection.sendRawTransaction(signed.serialize());
+      } else if (signed instanceof Uint8Array || Buffer.isBuffer(signed)) {
+        signature = await connection.sendRawTransaction(signed);
+      } else {
+        console.error('Unsupported signed transaction format');
+        enqueueSnackbar('Unsupported signed transaction format', { variant: 'error' });
+        setOverlayVisibility(false);
+        return;
+      }
 
       enqueueSnackbar('Transaction has been sent, waiting for confirmation.', { variant: 'info', });
 
