@@ -28,7 +28,8 @@ export const HomePage: React.FC = () => {
   );
 };
 
-const Container = styled.div<{ connected: boolean }>`
+// styles
+const Container = styled.div<{ connected: boolean }>` 
   display: flex;
   flex-direction: column;
   background-color: ${({ theme }) => theme.colors.background};
